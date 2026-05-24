@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Zeenat Birthday Surprise 💖</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Segoe UI',sans-serif;
+  overflow-x:hidden;
+  min-height:100vh;
+  background:linear-gradient(-45deg,#ffdde1,#ee9ca7,#c7d2fe,#fbcfe8);
+  background-size:400% 400%;
+  animation:bgMove 15s ease infinite;
+}
+
+@keyframes bgMove{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  z-index:0;
+}
+
+#loader{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(135deg,#111,#1e1b4b,#831843);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:999999;
+  color:white;
+  text-align:center;
+}
+
+.loader-content{
+  animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.05);}
+  100%{transform:scale(1);}
+}
+
+.hero{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+  position:relative;
+  z-index:2;
+}
+
+.glass{
+  width:100%;
+  max-width:1000px;
+  padding:35px;
+  border-radius:30px;
+  background:rgba(255,255,255,0.2);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,0.3);
+  box-shadow:0 20px 50px rgba(0,0,0,0.25);
+  text-align:center;
+}
+
+h1{
+  font-size:3.5rem;
+  color:#e11d48;
+  font-weight:900;
+}
+
+h2{
+  color:#4f46e5;
+  font-weight:bold;
+}
+
+#typewriter{
+  color:white;
+  font-size:1.2rem;
+  margin-top:10px;
+  min-height:40px;
+  font-weight:bold;
+}
+
+.btn-custom{
+  border-radius:50px;
+  padding:10px 18px;
+  margin:5px;
+  font-weight:bold;
+  transition:0.4s;
+}
+
+.btn-custom:hover{
+  transform:translateY(-5px) scale(1.05);
+}
+
+.box{
+  display:none;
+  margin-top:20px;
+  padding:20px;
+  border-radius:20px;
+  background:rgba(255,255,255,0.8);
+  animation:fadeUp 0.7s ease;
+}
+
+@keyframes fadeUp{
+  from{
+    transform:translateY(20px);
+    opacity:0;
+  }
+  to{
+    transform:translateY(0);
+    opacity:1;
+  }
+}
+
+.gift-card{
+  background:white;
+  border-radius:25px;
+  padding:25px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.15);
+}
+
+.wish-line{
+  list-style:none;
+  margin-top:10px;
+  padding:15px;
+  border-radius:15px;
+  background:#fff0f3;
+  font-weight:600;
+}
+
+.timeline-item{
+  padding:15px;
+  border-radius:15px;
+  background:white;
+  margin-top:10px;
+  font-weight:bold;
+}
+
+.gallery img{
+  width:100%;
+  border-radius:15px;
+  margin-top:10px;
+  height:220px;
+  object-fit:cover;
+}
+
+#lockScreen{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.9);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:99999;
+}
+
+.lock-box{
+  width:350px;
+  padding:30px;
+  border-radius:20px;
+  background:rgba(255,255,255,0.12);
+  backdrop-filter:blur(20px);
+  color:white;
+  border:1px solid rgba(255,255,255,0.2);
+}
+
+.heart{
+  position:absolute;
+  font-size:22px;
+  animation:floatUp 5s linear forwards;
+}
+
+@keyframes floatUp{
+  0%{
+    transform:translateY(0);
+    opacity:1;
+  }
+  100%{
+    transform:translateY(-800px);
+    opacity:0;
+  }
+}
+
+.balloon{
+  position:absolute;
+  bottom:-150px;
+  font-size:45px;
+  animation:fly linear infinite;
+}
+
+@keyframes fly{
+  0%{
+    transform:translateY(0);
+  }
+  100%{
+    transform:translateY(-130vh);
+  }
+}
+
+.cursor-heart{
+  position:fixed;
+  pointer-events:none;
+  animation:heartFade 1s linear forwards;
+  z-index:999;
+}
+
+@keyframes heartFade{
+  to{
+    transform:translateY(-20px);
+    opacity:0;
+  }
+}
+
+video{
+  border-radius:20px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="loader">
+  <div class="loader-content">
+    <h1>💖 Loading Surprise For Zeenat 💖</h1>
+    <p>Preparing magical memories ✨</p>
+  </div>
+</div>
+
+<audio id="bgMusic" autoplay loop>
+  <source src="music.mp3" type="audio/mp3">
+</audio>
+
+<canvas id="confetti"></canvas>
+<canvas id="fireworks"></canvas>
+
+<div id="lockScreen">
+  <div class="lock-box text-center">
+    <h3>🔐 Secret Access</h3>
+
+    <input type="password"
+    id="pass"
+    class="form-control mt-3"
+    placeholder="Enter Password">
+
+    <button class="btn btn-danger mt-3 w-100"
+    onclick="unlock()">Unlock 💖</button>
+  </div>
+</div>
+
+<div class="hero">
+
+<div class="glass">
+
+<h1>🎂 Happy Birthday</h1>
+<h2>Zeenat ✨</h2>
+
+<p id="typewriter"></p>
+
+<p id="countdown" class="fw-bold mt-3"></p>
+
+<div class="mt-4">
+
+<button class="btn btn-warning btn-custom"
+onclick="gift()">🎁 Gift</button>
+
+<button class="btn btn-danger btn-custom"
+onclick="surprise()">🌸 Surprise</button>
+
+<button class="btn btn-primary btn-custom"
+onclick="openVideo()">🎥 Video</button>
+
+<button class="btn btn-success btn-custom"
+onclick="letter()">💌 Letter</button>
+
+<button class="btn btn-dark btn-custom"
+onclick="share()">📲 Share</button>
+
+<button class="btn btn-light btn-custom"
+onclick="toggleMusic()">🎵 Music</button>
+
+<button class="btn btn-info btn-custom"
+onclick="toggle('chatBox')">💬 AI Chat</button>
+
+<button class="btn btn-secondary btn-custom"
+onclick="toggle('timeline')">🕰️ Memories</button>
+
+<button class="btn btn-warning btn-custom"
+onclick="toggle('uploadBox')">📷 Upload</button>
+
+<button class="btn btn-danger btn-custom"
+onclick="toggle('gameBox')">🎮 Heart Game</button>
+
+<button class="btn btn-primary btn-custom"
+onclick="finalMsg()">🔐 Final Message</button>
+
+</div>
+
+<!-- GIFT -->
+
+<div id="giftBox" class="box">
+
+<div class="gift-card">
+
+<h3>🎁 Birthday Wishes</h3>
+
+<ul>
+
+<li class="wish-line">
+💖 Happy Birthday Zeenat!
+May your smile always shine.
+</li>
+
+<li class="wish-line">
+✨ May every dream become reality.
+</li>
+
+<li class="wish-line">
+🌸 Wishing you happiness forever.
+</li>
+
+<li class="wish-line">
+🎂 Stay blessed and beautiful.
+</li>
+
+<li class="wish-line">
+👑 You are truly special.
+</li>
+
+</ul>
+
+</div>
+
+</div>
+
+<!-- LETTER -->
+
+<div id="letterBox" class="box">
+
+<h3>💌 Letter For Zeenat</h3>
+
+<p class="mt-3">
+
+Dear Zeenat 💖
+
+<br><br>
+
+You are one of the most amazing people.
+
+May your birthday bring happiness,
+peace, success, and unforgettable memories.
+
+Thank you for making life beautiful ✨
+
+</p>
+
+</div>
+
+<!-- CHAT -->
+
+<div id="chatBox" class="box">
+
+<h3>💬 Zeenat AI Chat</h3>
+
+<div id="chatArea"
+style="
+height:250px;
+overflow-y:auto;
+background:white;
+padding:15px;
+border-radius:15px;
+"></div>
+
+<input type="text"
+id="chatInput"
+class="form-control mt-3"
+placeholder="Type message...">
+
+<button class="btn btn-danger mt-3"
+onclick="sendMsg()">Send 💖</button>
+
+</div>
+
+<!-- TIMELINE -->
+
+<div id="timeline" class="box">
+
+<h3>🕰️ Beautiful Memories</h3>
+
+<div class="timeline-item">
+✨ The day we met
+</div>
+
+<div class="timeline-item">
+💖 Endless laughter and memories
+</div>
+
+<div class="timeline-item">
+🎂 Birthday 2026
+</div>
+
+<div class="timeline-item">
+🌸 Forever friendship
+</div>
+
+</div>
+
+<!-- UPLOAD -->
+
+<div id="uploadBox" class="box">
+
+<h3>📷 Upload Photos</h3>
+
+<input type="file"
+id="imgInput"
+multiple
+accept="image/*"
+class="form-control"
+onchange="loadImages()">
+
+<div id="gallery" class="row mt-3 gallery"></div>
+
+</div>
+
+<!-- GAME -->
+
+<div id="gameBox" class="box">
+
+<h3>🎮 Heart Click Game</h3>
+
+<p class="mt-2">
+Score:
+<span id="score">0</span>
+</p>
+
+<button class="btn btn-danger btn-lg"
+onclick="addScore()">❤️ Click Me</button>
+
+</div>
+
+<!-- FINAL -->
+
+<div id="finalBox" class="box">
+
+<h2>🎂 Final Message</h2>
+
+<p class="mt-3">
+
+Zeenat 💖
+
+<br><br>
+
+You are truly special.
+
+May your life always stay beautiful,
+peaceful, and magical ✨
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- VIDEO MODAL -->
+
+<div class="modal fade" id="videoModal">
+
+<div class="modal-dialog modal-dialog-centered modal-lg">
+
+<div class="modal-content">
+
+<div class="modal-body bg-dark">
+
+<video width="100%" controls>
+
+<source
+src="https://www.w3schools.com/html/mov_bbb.mp4"
+type="video/mp4">
+
+</video>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+let pass="ZEENAT2026";
+let score=0;
+
+let target=
+new Date("2026-05-25").getTime();
+
+function unlock(){
+
+if(document.getElementById('pass').value===pass){
+
+document.getElementById('lockScreen').style.display='none';
+
+confetti();
+fire();
+hearts();
+
+}else{
+
+alert('Wrong Password 😅');
+
+}
+
+}
+
+const msg=
+"✨ Every moment with you feels magical Zeenat 💖";
+
+let i=0;
+
+function typing(){
+
+if(i<msg.length){
+
+document.getElementById('typewriter').innerHTML+=
+msg.charAt(i);
+
+i++;
+
+setTimeout(typing,70);
+
+}
+
+}
+
+typing();
+
+function toggle(id){
+
+let e=document.getElementById(id);
+
+e.style.display=
+e.style.display==='block'?'none':'block';
+
+}
+
+function gift(){
+
+toggle('giftBox');
+
+hearts();
+fire();
+confetti();
+
+}
+
+function surprise(){
+
+hearts();
+fire();
+confetti();
+
+alert("🌸 Surprise Activated 💖");
+
+}
+
+function letter(){
+
+toggle('letterBox');
+
+}
+
+function openVideo(){
+
+new bootstrap.Modal(
+document.getElementById('videoModal')
+).show();
+
+}
+
+function share(){
+
+window.open(
+`https://wa.me/?text=🎂 Happy Birthday Zeenat 💖 ${location.href}`
+);
+
+}
+
+function loadImages(){
+
+let files=
+document.getElementById('imgInput').files;
+
+let gallery=
+document.getElementById('gallery');
+
+gallery.innerHTML='';
+
+for(let file of files){
+
+let url=URL.createObjectURL(file);
+
+gallery.innerHTML+=`
+<div class="col-md-4">
+<img src="${url}">
+</div>
+`;
+
+}
+
+}
+
+function addScore(){
+
+score++;
+
+document.getElementById('score').innerText=score;
+
+hearts();
+
+}
+
+function finalMsg(){
+
+let now=Date.now();
+
+if(now>=target){
+
+toggle('finalBox');
+
+}else{
+
+alert("🎂 Wait till 25 May");
+
+}
+
+}
+
+function hearts(){
+
+for(let i=0;i<25;i++){
+
+let h=document.createElement('div');
+
+h.className='heart';
+
+h.innerHTML='💖';
+
+h.style.left=Math.random()*100+'%';
+
+h.style.top='80%';
+
+document.body.appendChild(h);
+
+setTimeout(()=>{
+h.remove();
+},5000);
+
+}
+
+}
+
+function fire(){
+
+let c=document.getElementById('fireworks');
+
+let ctx=c.getContext('2d');
+
+c.width=window.innerWidth;
+c.height=window.innerHeight;
+
+for(let i=0;i<100;i++){
+
+ctx.fillStyle=
+`hsl(${Math.random()*360},100%,60%)`;
+
+ctx.fillRect(
+Math.random()*c.width,
+Math.random()*c.height,
+4,
+4
+);
+
+}
+
+setTimeout(()=>{
+ctx.clearRect(0,0,c.width,c.height);
+},700);
+
+}
+
+function confetti(){
+
+let c=document.getElementById('confetti');
+
+let ctx=c.getContext('2d');
+
+c.width=window.innerWidth;
+c.height=window.innerHeight;
+
+for(let i=0;i<150;i++){
+
+ctx.fillStyle=
+`hsl(${Math.random()*360},100%,60%)`;
+
+ctx.fillRect(
+Math.random()*c.width,
+Math.random()*c.height,
+6,
+6
+);
+
+}
+
+setTimeout(()=>{
+ctx.clearRect(0,0,c.width,c.height);
+},900);
+
+}
+
+function balloons(){
+
+for(let i=0;i<20;i++){
+
+let b=document.createElement('div');
+
+b.className='balloon';
+
+b.innerHTML='🎈';
+
+b.style.left=Math.random()*100+'%';
+
+b.style.animationDuration=
+(5+Math.random()*5)+'s';
+
+document.body.appendChild(b);
+
+}
+
+}
+
+balloons();
+
+let music=
+document.getElementById('bgMusic');
+
+function toggleMusic(){
+
+if(music.paused){
+
+music.play();
+
+}else{
+
+music.pause();
+
+}
+
+}
+
+function sendMsg(){
+
+let input=
+document.getElementById('chatInput');
+
+let area=
+document.getElementById('chatArea');
+
+let user=input.value;
+
+if(user.trim()==='') return;
+
+area.innerHTML+=`
+<div class="text-end mb-2">
+<span class="badge bg-primary">
+You: ${user}
+</span>
+</div>
+`;
+
+let replies=[
+
+'💖 You are special',
+'✨ Your smile is beautiful',
+'🌸 Happy Birthday Queen',
+'🎂 Forever favorite person',
+'👑 You make life magical'
+
+];
+
+let bot=
+replies[Math.floor(Math.random()*replies.length)];
+
+setTimeout(()=>{
+
+area.innerHTML+=`
+<div class="mb-2">
+<span class="badge bg-danger">
+Zeenat AI: ${bot}
+</span>
+</div>
+`;
+
+area.scrollTop=area.scrollHeight;
+
+},700);
+
+input.value='';
+
+}
+
+setInterval(()=>{
+
+let d=
+Math.floor((target-Date.now())/86400000);
+
+document.getElementById('countdown').innerText=
+`🎂 25 May | ${d} days left`;
+
+},1000);
+
+window.addEventListener('load',()=>{
+
+setTimeout(()=>{
+
+document.getElementById('loader').style.display='none';
+
+},2500);
+
+confetti();
+fire();
+
+});
+
+setTimeout(()=>{
+
+alert("🎂 Happy Birthday Zeenat 💖");
+
+},4000);
+
+document.addEventListener('mousemove',(e)=>{
+
+let heart=document.createElement('div');
+
+heart.className='cursor-heart';
+
+heart.innerHTML='💖';
+
+heart.style.left=e.clientX+'px';
+
+heart.style.top=e.clientY+'px';
+
+document.body.appendChild(heart);
+
+setTimeout(()=>{
+heart.remove();
+},1000);
+
+});
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
